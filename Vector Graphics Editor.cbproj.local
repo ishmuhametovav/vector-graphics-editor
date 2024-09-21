@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.833,=D:\C++ Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.947,=D:\C++ Projects\Project1PCH1.h</Transaction>
+    <Transaction>2024.09.21 18:22:04.524,=D:\C++ Projects\Project1PCH1.h</Transaction>
+    <Transaction>2024.09.21 18:22:04.663,=D:\C++ Projects\Unit1.cpp</Transaction>
+    <Transaction>2024.09.21 18:24:10.941,D:\C++ Projects\Векторный графический редактор\Vector Graphics EditorPCH1.h=D:\C++ Projects\Project1PCH1.h</Transaction>
+    <Transaction>2024.09.21 18:24:10.953,D:\C++ Projects\Векторный графический редактор\Unit1.cpp=D:\C++ Projects\Unit1.cpp</Transaction>
+    <Transaction>2024.09.21 18:24:10.953,D:\C++ Projects\Векторный графический редактор\Unit1.dfm=D:\C++ Projects\Unit1.dfm</Transaction>
+    <Transaction>2024.09.21 18:24:10.953,D:\C++ Projects\Векторный графический редактор\Unit1.h=D:\C++ Projects\Unit1.h</Transaction>
+    <Transaction>2024.09.21 18:24:10.966,D:\C++ Projects\Векторный графический редактор\Vector Graphics Editor.cbproj=D:\C++ Projects\Project1.cbproj</Transaction>
+    <Transaction>2024.09.21 18:24:27.591,D:\C++ Projects\Векторный графический редактор\Vector Graphics Editor.cbproj=D:\C++ Projects\Векторный графический редактор\Vector Graphics Editor.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>
