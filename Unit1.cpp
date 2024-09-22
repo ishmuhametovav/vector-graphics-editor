@@ -10,7 +10,24 @@
 TForm1 *Form1;
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner)
+	: TForm(Owner), coord_system(std::make_unique<coordinate_system>())
 {
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y)
+
+{
+	double x = coord_system->to_coordx(X);
+	double y = coord_system->to_coordy(Y);
+	coordinates_label->Caption = String(x) + " : " + String(y);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormResize(TObject *Sender)
+{
+	coordinates_label->Left = ClientWidth - coordinates_label->Width - 30;
+	coordinates_label->Top = ClientHeight - coordinates_label->Height - 10;
+}
+//---------------------------------------------------------------------------
+
+

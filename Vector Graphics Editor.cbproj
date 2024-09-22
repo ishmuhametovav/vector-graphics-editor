@@ -179,6 +179,12 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
     <ItemGroup>
+        <CppCompile Include="coordinate_system.cpp">
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
+        <None Include="coordinate_system.h">
+            <BuildOrder>3</BuildOrder>
+        </None>
         <CppCompile Include="Unit1.cpp">
             <Form>Form1</Form>
             <FormType>dfm</FormType>

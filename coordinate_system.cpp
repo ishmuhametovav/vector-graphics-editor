@@ -1,0 +1,29 @@
+#include<stdexcept>
+#include<cmath>
+#include"coordinate_system.h"
+
+coordinate_system::coordinate_system(double x_min, double y_min, double x_max, double y_max, double scale) :
+	x_min(x_min), y_min(y_min), x_max(x_max), y_max(y_max), scale(scale)
+{
+	if(x_min >= x_max || y_min >= y_max)
+		throw std::invalid_argument("invalidate coordinate boundaries");
+}
+
+int coordinate_system::to_pixelx(const double x) const
+{
+	return static_cast<int>(std::round(x * scale));
+}
+int coordinate_system::to_pixely(const double y) const
+{
+	return static_cast<int>(std::round(y * scale));
+}
+
+double coordinate_system::to_coordx(const int pixel_x) const
+{
+	return static_cast<double>(pixel_x)/scale;
+}
+
+double coordinate_system::to_coordy(const int pixel_y) const
+{
+	return static_cast<double>(pixel_y)/scale;
+}
