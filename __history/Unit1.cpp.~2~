@@ -31,17 +31,3 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 //---------------------------------------------------------------------------
 
 
-void __fastcall TForm1::FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
-          bool &Handled)
-{
-	coord_system->set_scale(coord_system->get_scale() - 0.1);
-}
-//---------------------------------------------------------------------------
-
-void __fastcall TForm1::FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPoint &MousePos,
-		  bool &Handled)
-{
-        coord_system->set_scale(coord_system->get_scale() + 0.1);
-}
-//---------------------------------------------------------------------------
-

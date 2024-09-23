@@ -13,8 +13,6 @@ public:
 
 	double to_coordx(const int pixel_x) const;
 	double to_coordy(const int pixel_y) const;
-	double get_scale() const;
-	void set_scale(const double value);
 };
 
 #endif

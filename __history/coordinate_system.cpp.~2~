@@ -27,13 +27,3 @@ double coordinate_system::to_coordy(const int pixel_y) const
 {
 	return static_cast<double>(pixel_y)/scale;
 }
-
-double coordinate_system::get_scale() const
-{
-	return scale;
-}
-
-void coordinate_system::set_scale(const double value)
-{
-	this->scale = value > 0 ? value : 0.1;
-}
