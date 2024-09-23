@@ -24,6 +24,7 @@ __published:	// IDE-managed Components
 
 private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;
+	void update_coordinates_label(const int X, const int Y);
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
 };
