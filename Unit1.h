@@ -20,7 +20,7 @@ __published:	// IDE-managed Components
 	void __fastcall FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
           bool &Handled);
 	void __fastcall FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPoint &MousePos,
-          bool &Handled);
+		  bool &Handled);
 
 private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;

@@ -16,10 +16,10 @@ object Form1: TForm1
   OnResize = FormResize
   TextHeight = 15
   object coordinates_label: TLabel
-    Left = 567
-    Top = 418
-    Width = 9
-    Height = 15
-    Caption = ' : '
+    Left = 536
+    Top = 416
+    Width = 65
+    Height = 17
+    Caption = '0.0 : 0.0'
   end
 end

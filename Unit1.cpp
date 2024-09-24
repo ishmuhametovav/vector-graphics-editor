@@ -13,7 +13,7 @@ void TForm1::update_coordinates_label(const int X, const int Y)
 {
 	double x = coord_system->to_coordx(X);
 	double y = coord_system->to_coordy(Y);
-	coordinates_label->Caption = String(x) + " : " + String(y);
+	coordinates_label->Caption = String().sprintf(L"%.1f : %.1f", x, y);
 }
 
 //---------------------------------------------------------------------------
@@ -54,4 +54,6 @@ void __fastcall TForm1::FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPo
 	update_coordinates_label(localPos.X, localPos.Y);
 }
 //---------------------------------------------------------------------------
+
+
 
