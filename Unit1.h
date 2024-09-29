@@ -12,6 +12,7 @@
 #include<vector>
 #include"coordinate_system.h"
 #include"Rectangle.h"
+#include"Ellipse.h"
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -31,6 +32,7 @@ private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;
 	std::vector<shape*> shapes;
 	void update_coordinates_label(const int X, const int Y);
+	void draw_shapes();
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
 };

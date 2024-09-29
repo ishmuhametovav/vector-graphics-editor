@@ -185,6 +185,12 @@
         <None Include="coordinate_system.h">
             <BuildOrder>3</BuildOrder>
         </None>
+        <CppCompile Include="Ellipse.cpp">
+            <BuildOrder>9</BuildOrder>
+        </CppCompile>
+        <None Include="Ellipse.h">
+            <BuildOrder>8</BuildOrder>
+        </None>
         <CppCompile Include="Rectangle.cpp">
             <BuildOrder>7</BuildOrder>
         </CppCompile>

@@ -16,6 +16,12 @@ void TForm1::update_coordinates_label(const int X, const int Y)
 	coordinates_label->Caption = String().sprintf(L"%.1f : %.1f", x, y);
 }
 
+void TForm1::draw_shapes()
+{
+	for(auto& i : shapes)
+		i->draw(Canvas, coord_system.get());
+}
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner), coord_system(std::make_unique<coordinate_system>())
@@ -65,7 +71,7 @@ void __fastcall TForm1::FormMouseDown(TObject *Sender, TMouseButton Button, TShi
 {
 	double x = coord_system->to_coordx(X);
 	double y = coord_system->to_coordy(Y);
-	shapes.push_back(new rectangle(x, y, x + 30, y + 15));
+	shapes.push_back(new ellipse(x, y, 30, 15));
 	shapes.back()->draw(Canvas, coord_system.get());
 }
 //---------------------------------------------------------------------------
@@ -73,8 +79,7 @@ void __fastcall TForm1::FormMouseDown(TObject *Sender, TMouseButton Button, TShi
 
 void __fastcall TForm1::FormPaint(TObject *Sender)
 {
-	for(auto& i : shapes)
-		i->draw(Canvas, coord_system.get());
+	draw_shapes();
 }
 //---------------------------------------------------------------------------
 
