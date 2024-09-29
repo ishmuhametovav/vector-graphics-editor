@@ -10,16 +10,18 @@ object Form1: TForm1
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnMouseDown = FormMouseDown
   OnMouseMove = FormMouseMove
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
+  OnPaint = FormPaint
   OnResize = FormResize
   TextHeight = 15
   object coordinates_label: TLabel
     Left = 536
     Top = 416
-    Width = 65
-    Height = 17
+    Width = 39
+    Height = 15
     Caption = '0.0 : 0.0'
   end
 end

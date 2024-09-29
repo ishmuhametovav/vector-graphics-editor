@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.154,D:\C++ Projects\Векторный графический редактор\File1.h=D:\C++ Projects\Векторный графический редактор\Shape.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.331,=D:\C++ Projects\Векторный графический редактор\File1.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.870,=D:\C++ Projects\Векторный графический редактор\File1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.808,=D:\C++ Projects\Векторный графический редактор\File1.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.585,D:\C++ Projects\Векторный графический редактор\File1.h=D:\C++ Projects\Векторный графический редактор\coordinate_system.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.953,D:\C++ Projects\Векторный графический редактор\Unit1.dfm=D:\C++ Projects\Unit1.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.833,=D:\C++ Projects\Unit1.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.663,=D:\C++ Projects\Unit1.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.953,D:\C++ Projects\Векторный графический редактор\Unit1.h=D:\C++ Projects\Unit1.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.665,D:\C++ Projects\Векторный графический редактор\File1.h=D:\C++ Projects\Векторный графический редактор\Rectangle.h</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.808,=D:\C++ Projects\Векторный графический редактор\File1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.154,D:\C++ Projects\Векторный графический редактор\File1.h=D:\C++ Projects\Векторный графический редактор\Shape.h</Transaction>
     <Transaction>1899.12.30 00:00:00.000.882,D:\C++ Projects\Векторный графический редактор\File1.cpp=D:\C++ Projects\Векторный графический редактор\Rectangle.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.719,=D:\C++ Projects\Векторный графический редактор\Unit2.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.953,D:\C++ Projects\Векторный графический редактор\Unit1.cpp=D:\C++ Projects\Unit1.cpp</Transaction>
@@ -27,6 +27,7 @@
     <File Path="coordinate_system.cpp"/>
     <File Path="coordinate_system.h"/>
     <File Path="Rectangle.h"/>
+    <File Path="Rectangle.cpp"/>
     <File Path="Shape.h"/>
     <File Path="Unit1.cpp"/>
     <File Path="Unit1.cpp"/>
@@ -34,6 +35,5 @@
     <File Path="Unit1.h"/>
     <File Path="Vector Graphics Editor.cpp"/>
     <File Path="Vector Graphics EditorPCH1.h"/>
-    <File Path="Rectangle.cpp"/>
   </ProjectSortOrder>
 </BorlandProject>

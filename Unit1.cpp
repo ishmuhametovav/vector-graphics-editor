@@ -43,6 +43,7 @@ void __fastcall TForm1::FormMouseWheelDown(TObject *Sender, TShiftState Shift, T
 	coord_system->set_scale(coord_system->get_scale() - 0.1);
 	TPoint localPos = ScreenToClient(MousePos);
 	update_coordinates_label(localPos.X, localPos.Y);
+	Invalidate();
 }
 //---------------------------------------------------------------------------
 
@@ -52,8 +53,28 @@ void __fastcall TForm1::FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPo
 	coord_system->set_scale(coord_system->get_scale() + 0.1);
 	TPoint localPos = ScreenToClient(MousePos);
 	update_coordinates_label(localPos.X, localPos.Y);
+    Invalidate();
 }
 //---------------------------------------------------------------------------
 
 
+
+
+void __fastcall TForm1::FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y)
+{
+	double x = coord_system->to_coordx(X);
+	double y = coord_system->to_coordy(Y);
+	shapes.push_back(new rectangle(x, y, x + 30, y + 15));
+	shapes.back()->draw(Canvas, coord_system.get());
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::FormPaint(TObject *Sender)
+{
+	for(auto& i : shapes)
+		i->draw(Canvas, coord_system.get());
+}
+//---------------------------------------------------------------------------
 

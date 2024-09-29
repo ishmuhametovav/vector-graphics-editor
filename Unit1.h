@@ -9,7 +9,9 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
 #include<memory>
+#include<vector>
 #include"coordinate_system.h"
+#include"Rectangle.h"
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -21,9 +23,13 @@ __published:	// IDE-managed Components
           bool &Handled);
 	void __fastcall FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPoint &MousePos,
 		  bool &Handled);
+	void __fastcall FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y);
+	void __fastcall FormPaint(TObject *Sender);
 
 private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;
+	std::vector<shape*> shapes;
 	void update_coordinates_label(const int X, const int Y);
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
