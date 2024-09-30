@@ -21,7 +21,7 @@ void rectangle::translate(const double dx, const double dy)
 	y1+=dy; y2+=dy;
 }
 
-void rectangle::scale(const double x, const double y)
+void rectangle::scale(const double value)
 {
-	x2 = x; y2 = y;
+
 }

@@ -191,6 +191,12 @@
         <None Include="Ellipse.h">
             <BuildOrder>8</BuildOrder>
         </None>
+        <CppCompile Include="Line.cpp">
+            <BuildOrder>11</BuildOrder>
+        </CppCompile>
+        <None Include="Line.h">
+            <BuildOrder>10</BuildOrder>
+        </None>
         <CppCompile Include="Rectangle.cpp">
             <BuildOrder>7</BuildOrder>
         </CppCompile>

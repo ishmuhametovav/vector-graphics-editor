@@ -13,7 +13,6 @@
 #include"coordinate_system.h"
 #include"Rectangle.h"
 #include"Ellipse.h"
-#include"Line.h"
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -28,13 +27,10 @@ __published:	// IDE-managed Components
 	void __fastcall FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
           int X, int Y);
 	void __fastcall FormPaint(TObject *Sender);
-	void __fastcall FormMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y);
 
 private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;
 	std::vector<shape*> shapes;
-	bool shape_drawing;
 	void update_coordinates_label(const int X, const int Y);
 	void draw_shapes();
 public:		// User declarations

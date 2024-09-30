@@ -1,4 +1,3 @@
-#include<cmath>
 #include"coordinate_system.h"
 #include"Ellipse.h"
 
@@ -23,8 +22,4 @@ void ellipse::translate(const double dx, const double dy)
 	y_center+=dy;
 }
 
-void ellipse::scale(const double x, const double y)
-{
-	x_radius = std::abs(x_center - x);
-	y_radius = std::abs(y_center - y);
-}
+void ellipse::scale(const double value){}

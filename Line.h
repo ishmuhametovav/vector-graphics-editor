@@ -1,13 +1,13 @@
-#ifndef ELLIPSE_H
-#define ELLIPSE_H
+#ifndef LINE_H
+#define LINE_H
 
 #include"Shape.h"
 
-class ellipse : public shape
+class line : public shape
 {
-	double x_center, y_center, x_radius, y_radius;
+	double x1, y1, x2, y2;
 public:
-	ellipse(double x_center, double y_center, double x_radius, double y_radius);
+	line(double x1, double y1, double x2, double y2);
 	void draw(TCanvas* canvas, const coordinate_system* coord_system) override;
 	void translate(const double dx, const double dy) override;
 	void scale(const double x, const double y) override;
