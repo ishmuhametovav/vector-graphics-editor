@@ -28,3 +28,8 @@ void ellipse::scale(const double x, const double y)
 	x_radius = std::abs(x_center - x);
 	y_radius = std::abs(y_center - y);
 }
+
+void ellipse::update_on_drag(const double x, const double y)
+{
+	scale(x, y);
+}

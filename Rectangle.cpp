@@ -25,3 +25,9 @@ void rectangle::scale(const double x, const double y)
 {
 	x2 = x; y2 = y;
 }
+
+void rectangle::update_on_drag(const double x, const double y)
+{
+	scale(x, y);
+}
+

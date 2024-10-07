@@ -14,6 +14,7 @@
 #include"Rectangle.h"
 #include"Ellipse.h"
 #include"Line.h"
+#include"Pencil.h"
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {

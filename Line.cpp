@@ -26,3 +26,8 @@ void line::scale(const double x, const double y)
 {
 	x2 = x; y2 = y;
 }
+
+void line::update_on_drag(const double x, const double y)
+{
+	scale(x, y);
+}

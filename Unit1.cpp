@@ -37,7 +37,7 @@ void __fastcall TForm1::FormMouseMove(TObject *Sender, TShiftState Shift, int X,
 	{
 		double x = coord_system->to_coordx(X);
 		double y = coord_system->to_coordy(Y);
-		shapes.back()->scale(x, y);
+		shapes.back()->update_on_drag(x, y);
 		Invalidate();
 	}
 }
@@ -79,7 +79,7 @@ void __fastcall TForm1::FormMouseDown(TObject *Sender, TMouseButton Button, TShi
 {
 	double x = coord_system->to_coordx(X);
 	double y = coord_system->to_coordy(Y);
-	shapes.push_back(new line(x, y, x, y));
+	shapes.push_back(new pencil(x, y, x, y));
 	shape_drawing = true;
 
 }
