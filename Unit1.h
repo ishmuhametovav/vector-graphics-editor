@@ -8,6 +8,7 @@
 #include <Vcl.Controls.hpp>
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
+#include <Vcl.ComCtrls.hpp>
 #include<memory>
 #include<vector>
 #include"coordinate_system.h"
@@ -19,9 +20,8 @@
 class TForm1 : public TForm
 {
 __published:	// IDE-managed Components
-	TLabel *coordinates_label;
+	TStatusBar *status_bar;
 	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
-	void __fastcall FormResize(TObject *Sender);
 	void __fastcall FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
           bool &Handled);
 	void __fastcall FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPoint &MousePos,
@@ -36,7 +36,7 @@ private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;
 	std::vector<shape*> shapes;
 	bool shape_drawing;
-	void update_coordinates_label(const int X, const int Y);
+	void update_status_bar(const int X, const int Y);
 	void draw_shapes();
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
