@@ -7,7 +7,7 @@ class ellipse : public shape
 {
 	double x_center, y_center, x_radius, y_radius;
 public:
-	ellipse(double x_center, double y_center, double x_radius, double y_radius);
+	ellipse(double x_center, double y_center, double x_radius, double y_radius, int width, TColor pen_color, TColor brush_color);
 	void draw(TCanvas* canvas, const coordinate_system* coord_system) override;
 	void translate(const double dx, const double dy) override;
 	void scale(const double x, const double y) override;

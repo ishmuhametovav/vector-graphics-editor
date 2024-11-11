@@ -74,7 +74,7 @@ void __fastcall TForm1::FormMouseDown(TObject *Sender, TMouseButton Button, TShi
 {
 	double x = coord_system->to_coordx(X);
 	double y = coord_system->to_coordy(Y);
-	shapes.push_back(new pencil(x, y, x, y));
+	shapes.push_back(new pencil(x, y, x, y, 10, clRed));
 	shape_drawing = true;
 
 }

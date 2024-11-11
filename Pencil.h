@@ -7,7 +7,9 @@ class pencil : public shape
 {
 	std::vector<std::pair<double, double>> points;
 public:
-	pencil(double x1, double y1, double x2, double y2);
+	pencil(double x1, double y1, double x2, double y2, int width, TColor pen_color);
+
+    inline void set_brush_color(const TColor brush_color) = delete;
 	void draw(TCanvas* canvas, const coordinate_system* coord_system) override;
 	void translate(const double dx, const double dy) override;
 	void scale(const double x, const double y) override;

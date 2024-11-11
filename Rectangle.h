@@ -7,7 +7,7 @@ class rectangle : public shape
 {
 	double x1,y1,x2,y2;
 public:
-	rectangle(double x1, double y1, double x2, double y2);
+	rectangle(double x1, double y1, double x2, double y2, int width, TColor pen_color, TColor brush_color);
 	void draw(TCanvas* canvas, const coordinate_system* coord_system) override;
 	void translate(const double dx, const double dy) override;
 	void scale(const double x, const double y) override;

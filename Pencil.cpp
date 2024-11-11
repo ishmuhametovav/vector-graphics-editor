@@ -3,7 +3,8 @@
 #include"coordinate_system.h"
 #include"Pencil.h"
 
-pencil::pencil(double x1, double y1, double x2, double y2) : points{ {x1, y1}, {x2, y2} } {}
+pencil::pencil(double x1, double y1, double x2, double y2, int width, TColor pen_color) :
+	points{ {x1, y1}, {x2, y2} }, shape(width, pen_color, clNone) {}
 
 void pencil::draw(TCanvas* canvas, const coordinate_system* coord_system)
 {

@@ -2,7 +2,8 @@
 #include"Rectangle.h"
 
 
-rectangle::rectangle(double x1, double y1, double x2, double y2) : x1(x1), y1(y1), x2(x2), y2(y2)
+rectangle::rectangle(double x1, double y1, double x2, double y2, int width, TColor pen_color, TColor brush_color) :
+	x1(x1), y1(y1), x2(x2), y2(y2), shape(width, pen_color, brush_color)
 {
 
 }

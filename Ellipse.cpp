@@ -2,8 +2,8 @@
 #include"coordinate_system.h"
 #include"Ellipse.h"
 
-ellipse::ellipse(double x_center, double y_center, double x_radius, double y_radius) : x_center(x_center),
-	 y_center(y_center), x_radius(x_radius), y_radius(y_radius)
+ellipse::ellipse(double x_center, double y_center, double x_radius, double y_radius, int width, TColor pen_color, TColor brush_color) :
+	x_center(x_center), y_center(y_center), x_radius(x_radius), y_radius(y_radius), shape(width, pen_color, brush_color)
 {
 
 }

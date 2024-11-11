@@ -3,7 +3,16 @@
 
 class shape
 {
+protected:
+	int width;
+	TColor pen_color, brush_color;
 public:
+	shape(int width, TColor pen_color, TColor brush_color) :
+		width(width), pen_color(pen_color), brush_color(brush_color){}
+
+	inline void set_width(const int width) { this->width = width; }
+	inline void set_pen_color(const TColor pen_color) { this->pen_color = pen_color; }
+	inline void set_brush_color(const TColor brush_color) { this->brush_color = brush_color; }
 	virtual void draw(TCanvas* canvas, const coordinate_system* coord_system) = 0;
 	virtual void translate(const double dx, const double dy) = 0;
 	virtual void scale(const double x, const double y) = 0;
