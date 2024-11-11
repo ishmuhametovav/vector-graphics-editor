@@ -209,6 +209,9 @@
         <None Include="Rectangle.h">
             <BuildOrder>6</BuildOrder>
         </None>
+        <CppCompile Include="Shape.cpp">
+            <BuildOrder>14</BuildOrder>
+        </CppCompile>
         <None Include="Shape.h">
             <BuildOrder>5</BuildOrder>
         </None>

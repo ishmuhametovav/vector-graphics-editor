@@ -14,6 +14,8 @@ void rectangle::draw(TCanvas* canvas, const coordinate_system* coord_system)
 	p_y1 = coord_system->to_pixely(y1);
 	p_x2 = coord_system->to_pixelx(x2);
 	p_y2 = coord_system->to_pixely(y2);
+
+	apply_properties(canvas);
 	canvas->Rectangle(p_x1, p_y1, p_x2, p_y2);
 }
 void rectangle::translate(const double dx, const double dy)

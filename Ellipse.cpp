@@ -13,6 +13,7 @@ void ellipse::draw(TCanvas* canvas, const coordinate_system* coord_system)
 	int p_y_center = coord_system->to_pixely(y_center);
 	int p_x_radius = static_cast<int>(x_radius * coord_system->get_scale());
 	int p_y_radius = static_cast<int>(y_radius * coord_system->get_scale());
+    apply_properties(canvas);
 	canvas->Ellipse(p_x_center - p_x_radius, p_y_center - p_y_radius,
 		 p_x_center + p_x_radius, p_y_center + p_y_radius);
 }

@@ -1,0 +1,9 @@
+#include"coordinate_system.h"
+#include"Shape.h"
+
+void shape::apply_properties(TCanvas* canvas) const
+{
+	canvas->Brush->Color = brush_color;
+	canvas->Pen->Color = pen_color;
+	canvas->Pen->Width = width;
+}

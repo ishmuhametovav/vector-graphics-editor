@@ -6,6 +6,8 @@ class shape
 protected:
 	int width;
 	TColor pen_color, brush_color;
+
+	void apply_properties(TCanvas* canvas) const;
 public:
 	shape(int width, TColor pen_color, TColor brush_color) :
 		width(width), pen_color(pen_color), brush_color(brush_color){}

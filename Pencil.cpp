@@ -8,6 +8,8 @@ pencil::pencil(double x1, double y1, double x2, double y2, int width, TColor pen
 
 void pencil::draw(TCanvas* canvas, const coordinate_system* coord_system)
 {
+	apply_properties(canvas);
+
 	for (unsigned int i = 1; i < points.size(); ++i)
 	{
 		int p_x1 = coord_system->to_pixelx(points[i - 1].first);
