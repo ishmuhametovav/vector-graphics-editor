@@ -9,8 +9,13 @@
 #include <Vcl.StdCtrls.hpp>
 #include <Vcl.Forms.hpp>
 #include <Vcl.ComCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.ButtonGroup.hpp>
+#include <System.ImageList.hpp>
+#include <Vcl.ImgList.hpp>
 #include<memory>
 #include<vector>
+#include<array>
 #include"coordinate_system.h"
 #include"Rectangle.h"
 #include"Ellipse.h"
@@ -21,6 +26,13 @@ class TForm1 : public TForm
 {
 __published:	// IDE-managed Components
 	TStatusBar *status_bar;
+	TPanel *panel;
+	TTrackBar *width_track_bar;
+	TButtonGroup *color_group;
+	TButtonGroup *tool_group;
+	TImageList *color_image_list;
+	TImageList *tools_image_list;
+	TButtonGroup *selected_colors_group;
 	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
           bool &Handled);
@@ -31,8 +43,13 @@ __published:	// IDE-managed Components
 	void __fastcall FormPaint(TObject *Sender);
 	void __fastcall FormMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
           int X, int Y);
+	void __fastcall FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight, bool &Resize);
+	void __fastcall color_groupButtonClicked(TObject *Sender, int Index);
+
+
 
 private:	// User declarations
+	std::array<TColor, 10> colors;
 	std::unique_ptr<coordinate_system> coord_system;
 	std::vector<shape*> shapes;
 	bool shape_drawing;

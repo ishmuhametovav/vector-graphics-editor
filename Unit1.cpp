@@ -25,7 +25,8 @@ void TForm1::draw_shapes()
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), shape_drawing(false)
+	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), shape_drawing(false),
+		colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
 {
 }
 //---------------------------------------------------------------------------
@@ -72,9 +73,19 @@ void __fastcall TForm1::FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPo
 void __fastcall TForm1::FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
 		  int X, int Y)
 {
+
+	if(tool_group->ItemIndex == -1) return;
 	double x = coord_system->to_coordx(X);
 	double y = coord_system->to_coordy(Y);
-	shapes.push_back(new pencil(x, y, x, y, 10, clRed));
+
+	int width = width_track_bar->Position;
+	TColor pen_color = colors[selected_colors_group->Items->Items[0]->ImageIndex];
+	TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
+
+	if(tool_group->ItemIndex == 0) shapes.push_back(new pencil(x, y, x, y, width, pen_color));
+	if(tool_group->ItemIndex == 1) shapes.push_back(new line(x, y, x, y, width, pen_color));
+	if(tool_group->ItemIndex == 2) shapes.push_back(new ellipse(x, y, 1, 1, width, pen_color, brush_color));
+	if(tool_group->ItemIndex == 3) shapes.push_back(new rectangle(x, y, x, y, width, pen_color, brush_color));
 	shape_drawing = true;
 
 }
@@ -91,6 +102,27 @@ void __fastcall TForm1::FormMouseUp(TObject *Sender, TMouseButton Button, TShift
 		  int X, int Y)
 {
 	shape_drawing = false;
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm1::FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight,
+          bool &Resize)
+{
+	panel->Top = (NewHeight - panel->Height) / 2 - 30;
+	panel->Left = 8;
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm1::color_groupButtonClicked(TObject *Sender, int Index)
+{
+	int selected_index = selected_colors_group->ItemIndex;
+	selected_colors_group->Items->Items[selected_index]->ImageIndex = Index;
 }
 //---------------------------------------------------------------------------
 
