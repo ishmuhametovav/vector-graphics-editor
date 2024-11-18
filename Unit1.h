@@ -33,6 +33,7 @@ __published:	// IDE-managed Components
 	TImageList *color_image_list;
 	TImageList *tools_image_list;
 	TButtonGroup *selected_colors_group;
+	TPaintBox *paint_box;
 	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
           bool &Handled);
@@ -45,6 +46,14 @@ __published:	// IDE-managed Components
           int X, int Y);
 	void __fastcall FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight, bool &Resize);
 	void __fastcall color_groupButtonClicked(TObject *Sender, int Index);
+	void __fastcall paint_boxPaint(TObject *Sender);
+	void __fastcall paint_boxMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y);
+	void __fastcall paint_boxMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
+	void __fastcall paint_boxMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y);
+
+
 
 
 
@@ -53,6 +62,7 @@ private:	// User declarations
 	std::unique_ptr<coordinate_system> coord_system;
 	std::vector<shape*> shapes;
 	bool shape_drawing;
+    bool paint_box_resizing;
 	void update_status_bar(const int X, const int Y);
 	void draw_shapes();
 public:		// User declarations

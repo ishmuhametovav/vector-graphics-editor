@@ -25,7 +25,7 @@ void TForm1::draw_shapes()
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), shape_drawing(false),
+	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), shape_drawing(false), paint_box_resizing(false),
 		colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
 {
 }
@@ -123,6 +123,58 @@ void __fastcall TForm1::color_groupButtonClicked(TObject *Sender, int Index)
 {
 	int selected_index = selected_colors_group->ItemIndex;
 	selected_colors_group->Items->Items[selected_index]->ImageIndex = Index;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::paint_boxPaint(TObject *Sender)
+{
+	paint_box->Canvas->Brush->Color = clWhite;
+	paint_box->Canvas->Pen->Width = 1;
+	paint_box->Canvas->Pen->Color = clBlack;
+	paint_box->Canvas->Rectangle(0, 0, paint_box->Width, paint_box->Height);
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm1::paint_boxMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y)
+{
+	if(Button == mbLeft && X >= paint_box->Width - 5 && Y >= paint_box->Height - 5)
+		paint_box_resizing = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, int X,
+          int Y)
+{
+
+	if(X >= paint_box->Width - 5 && Y >= paint_box->Height - 5)
+		paint_box->Cursor = crSizeNWSE;
+
+	else paint_box->Cursor = crDefault;
+
+	if(paint_box_resizing)
+	{
+        static TPoint last_point{ X, Y };
+
+		int deltax = X - last_point.X;
+		int deltay = Y - last_point.Y;
+
+		paint_box->Width += deltax;
+		paint_box->Height += deltay;
+
+		last_point = { X, Y };
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::paint_boxMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
+          int X, int Y)
+{
+	if(Button == mbLeft)
+		paint_box_resizing = false;
 }
 //---------------------------------------------------------------------------
 

@@ -19,6 +19,18 @@ object Form1: TForm1
   OnMouseWheelUp = FormMouseWheelUp
   OnPaint = FormPaint
   TextHeight = 15
+  object paint_box: TPaintBox
+    Left = 120
+    Top = 58
+    Width = 361
+    Height = 321
+    Color = clAppWorkSpace
+    ParentColor = False
+    OnMouseDown = paint_boxMouseDown
+    OnMouseMove = paint_boxMouseMove
+    OnMouseUp = paint_boxMouseUp
+    OnPaint = paint_boxPaint
+  end
   object status_bar: TStatusBar
     Left = 0
     Top = 408
@@ -134,8 +146,10 @@ object Form1: TForm1
       Images = color_image_list
       Items = <
         item
+          ImageIndex = 0
         end
         item
+          ImageIndex = 0
         end>
       ItemIndex = 0
       TabOrder = 3
@@ -143,7 +157,7 @@ object Form1: TForm1
   end
   object color_image_list: TImageList
     Left = 512
-    Top = 344
+    Top = 336
     Bitmap = {
       494C01010A001800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -550,7 +564,7 @@ object Form1: TForm1
   end
   object tools_image_list: TImageList
     Left = 512
-    Top = 304
+    Top = 288
     Bitmap = {
       494C010104000800040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
