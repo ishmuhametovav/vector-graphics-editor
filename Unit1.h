@@ -34,16 +34,10 @@ __published:	// IDE-managed Components
 	TImageList *tools_image_list;
 	TButtonGroup *selected_colors_group;
 	TPaintBox *paint_box;
-	void __fastcall FormMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
           bool &Handled);
 	void __fastcall FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPoint &MousePos,
 		  bool &Handled);
-	void __fastcall FormMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y);
-	void __fastcall FormPaint(TObject *Sender);
-	void __fastcall FormMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
-          int X, int Y);
 	void __fastcall FormCanResize(TObject *Sender, int &NewWidth, int &NewHeight, bool &Resize);
 	void __fastcall color_groupButtonClicked(TObject *Sender, int Index);
 	void __fastcall paint_boxPaint(TObject *Sender);
@@ -52,6 +46,8 @@ __published:	// IDE-managed Components
 	void __fastcall paint_boxMouseMove(TObject *Sender, TShiftState Shift, int X, int Y);
 	void __fastcall paint_boxMouseUp(TObject *Sender, TMouseButton Button, TShiftState Shift,
           int X, int Y);
+	void __fastcall selected_colors_groupMouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y);
 
 
 

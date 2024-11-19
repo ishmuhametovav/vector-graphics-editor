@@ -12,12 +12,8 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCanResize = FormCanResize
-  OnMouseDown = FormMouseDown
-  OnMouseMove = FormMouseMove
-  OnMouseUp = FormMouseUp
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
-  OnPaint = FormPaint
   TextHeight = 15
   object paint_box: TPaintBox
     Left = 120
@@ -153,6 +149,7 @@ object Form1: TForm1
         end>
       ItemIndex = 0
       TabOrder = 3
+      OnMouseDown = selected_colors_groupMouseDown
     end
   end
   object color_image_list: TImageList
