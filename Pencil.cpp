@@ -2,6 +2,7 @@
 #include<utility>
 #include"coordinate_system.h"
 #include"Pencil.h"
+#include<algorithm>
 
 pencil::pencil(double x1, double y1, double x2, double y2, int width, TColor pen_color) :
 	points{ {x1, y1}, {x2, y2} }, shape(width, pen_color, clNone) {}
@@ -24,7 +25,7 @@ void pencil::draw(TCanvas* canvas, const coordinate_system* coord_system)
 
 void pencil::translate(const double dx, const double dy)
 {
-	for(auto [u, v] : points)
+	for(auto& [u, v] : points)
 	{
 		u += dx; v += dy;
 	}
@@ -32,10 +33,99 @@ void pencil::translate(const double dx, const double dy)
 
 void pencil::scale(const double x, const double y)
 {
+	double min_x = points[0].first, max_x = points[0].first;
+	double min_y = points[0].second, max_y = points[0].second;
 
+    for (const auto& point : points)
+    {
+        if (point.first < min_x) min_x = point.first;
+        if (point.first > max_x) max_x = point.first;
+        if (point.second < min_y) min_y = point.second;
+        if (point.second > max_y) max_y = point.second;
+    }
+
+    double center_x = min_x + (max_x - min_x) / 2.0;
+    double center_y = min_y + (max_y - min_y) / 2.0;
+
+	for (auto& point : points)
+	{
+		point.first = x + (point.first - x) * center_x;
+		point.second = y + (point.second - y) * center_y;
+	}
+	double x_center = (x1 + x2)/2;
+	double y_center = (y1 + y2)/2;
+
+	double deltax = std::abs(x_center - x), deltay = std::abs(y_center - y);
+
+	x1 = x_center - deltax;
+	y1 = y_center - deltay;
+
+	x2 = x_center + deltax;
+	y2 = y_center + deltay;
 }
 
 void pencil::update_on_drag(const double x, const double y)
 {
 	points.push_back({x, y});
+}
+
+void pencil::draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system)
+{
+	canvas->Pen->Width = 1;
+	canvas->Pen->Style = psDash;
+	canvas->Pen->Color = clBlack;
+	canvas->Brush->Style = bsClear;
+
+	double x1 = points[0].first, x2 = points[0].first;
+	double y1 = points[0].second, y2 = points[0].second;
+
+	for (const auto& point : points)
+	{
+		if (point.first < x1) x1 = point.first;
+		if (point.first > x2) x2 = point.first;
+		if (point.second < y1) y1 = point.second;
+		if (point.second > y2) y2 = point.second;
+	}
+
+	int p_x1, p_y1, p_x2, p_y2;
+	p_x1 = coord_system->to_pixelx(x1);
+	p_y1 = coord_system->to_pixely(y1);
+	p_x2 = coord_system->to_pixelx(x2);
+	p_y2 = coord_system->to_pixely(y2);
+
+	int min_x = std::min(p_x1, p_x2);
+	int max_x = std::max(p_x1, p_x2);
+	int min_y = std::min(p_y1, p_y2);
+	int max_y = std::max(p_y1, p_y2);
+
+	canvas->Rectangle(min_x - 4 - width, min_y - 4 - width, max_x + 4 + width, max_y + 4 + width);
+}
+
+bool pencil::is_clicked(const double x, const double y) const
+{
+	double min_x = points[0].first, max_x = points[0].first;
+	double min_y = points[0].second, max_y = points[0].second;
+
+	for (const auto& point : points)
+	{
+		if (point.first < min_x) min_x = point.first;
+		if (point.first > max_x) max_x = point.first;
+		if (point.second < min_y) min_y = point.second;
+		if (point.second > max_y) max_y = point.second;
+	}
+
+	return (x >= min_x && x <= max_x && y >= min_y && y <= max_y);
+}
+
+bool pencil::is_border_clicked(const double x, const double y) const
+{
+	double max_x = points[0].first, max_y = points[0].second;
+
+	for (const auto& point : points)
+	{
+		if (point.first > max_x) max_x = point.first;
+		if (point.second > max_y) max_y = point.second;
+	}
+
+	return (x >= max_x && x <= max_x + width + 4 && y >= max_y && y <= max_y + width + 4);
 }

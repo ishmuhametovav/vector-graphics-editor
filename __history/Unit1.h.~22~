@@ -75,8 +75,7 @@ private:	// User declarations
 	std::vector<shape*> shapes;
 	shape* selected_shape;
 	bool shape_drawing;
-	bool shape_translation;
-    bool shape_resizing;
+    bool shape_translation;
 	bool paint_box_resizing;
 	void update_status_bar(const int X, const int Y);
 	void update_scrollbars();

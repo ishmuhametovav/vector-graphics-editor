@@ -47,7 +47,7 @@ void ellipse::draw_selection_box(TCanvas* canvas, const coordinate_system* coord
 	p_x1 = coord_system->to_pixelx(x_center - x_radius);
 	p_y1 = coord_system->to_pixely(y_center - y_radius);
 	p_x2 = coord_system->to_pixelx(x_center + x_radius);
-	p_y2 = coord_system->to_pixely(y_center + y_radius);
+	p_y2 = coord_system->to_pixely(x_center + x_radius);
 
 	int min_x = std::min(p_x1, p_x2);
 	int max_x = std::max(p_x1, p_x2);
@@ -74,12 +74,5 @@ bool ellipse::is_clicked(const double x, const double y) const
 
 bool ellipse::is_border_clicked(const double x, const double y) const
 {
-	double x1 = x_center - x_radius;
-	double y1 = y_center - y_radius;
-	double x2 = x_center + x_radius;
-	double y2 = y_center + y_radius;
-	double max_x = std::max(x1, x2);
-	double max_y = std::max(y1, y2);
-
-	return (x >= max_x && x <= max_x + width + 4 && y >= max_y && y <= max_y + width + 4);
+	return false;
 }

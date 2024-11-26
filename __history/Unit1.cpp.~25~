@@ -111,7 +111,6 @@ void __fastcall TForm1::color_groupButtonClicked(TObject *Sender, int Index)
 		TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
 		selected_shape->set_pen_color(pen_color);
 		selected_shape->set_brush_color(brush_color);
-		paint_box->Invalidate();
 	}
 }
 //---------------------------------------------------------------------------
@@ -189,8 +188,7 @@ void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, i
 	}
 	else
 	{
-		if((X >= paint_box->Width - 5 && Y >= paint_box->Height - 5) ||
-			 (selected_shape && selected_shape->is_border_clicked(x, y)))
+		if(X >= paint_box->Width - 5 && Y >= paint_box->Height - 5)
 			paint_box->Cursor = crSizeNWSE;
 
 		else paint_box->Cursor = crDefault;
@@ -275,7 +273,6 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 void __fastcall TForm1::width_track_barChange(TObject *Sender)
 {
 	if(selected_shape) selected_shape->set_width(width_track_bar->Position);
-	paint_box->Invalidate();
 }
 //---------------------------------------------------------------------------
 

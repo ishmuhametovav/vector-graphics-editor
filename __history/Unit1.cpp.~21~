@@ -21,8 +21,6 @@ void TForm1::draw_shapes()
 {
 	for(auto& i : shapes)
 		i->draw(paint_box->Canvas, coord_system.get());
-
-	if(selected_shape) selected_shape->draw_selection_box(paint_box->Canvas, coord_system.get());
 }
 
 
@@ -45,8 +43,8 @@ void TForm1::update_scrollbars()
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), selected_shape(nullptr), shape_drawing(false), shape_translation(false),
-		shape_resizing(false), paint_box_resizing(false), colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
+	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), shape_drawing(false), paint_box_resizing(false),
+		colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
 {
 }
 //---------------------------------------------------------------------------
@@ -104,15 +102,6 @@ void __fastcall TForm1::color_groupButtonClicked(TObject *Sender, int Index)
 {
 	int selected_index = selected_colors_group->ItemIndex;
 	selected_colors_group->Items->Items[selected_index]->ImageIndex = Index;
-
-	if(selected_shape)
-	{
-		TColor pen_color = colors[selected_colors_group->Items->Items[0]->ImageIndex];
-		TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
-		selected_shape->set_pen_color(pen_color);
-		selected_shape->set_brush_color(brush_color);
-		paint_box->Invalidate();
-	}
 }
 //---------------------------------------------------------------------------
 
@@ -124,7 +113,6 @@ void __fastcall TForm1::paint_boxPaint(TObject *Sender)
 	draw_shapes();
 	paint_box->Canvas->Pen->Width = 1;
 	paint_box->Canvas->Pen->Color = clBlack;
-	paint_box->Canvas->Pen->Style = psSolid;
 	paint_box->Canvas->Brush->Style = bsClear;
 	paint_box->Canvas->Rectangle(0, 0, paint_box->Width, paint_box->Height);
 }
@@ -140,84 +128,44 @@ void __fastcall TForm1::paint_boxMouseDown(TObject *Sender, TMouseButton Button,
 		paint_box_resizing = true;
 	else
 	{
+    	if(tool_group->ItemIndex == -1) return;
 		double x = coord_system->to_coordx(X);
 		double y = coord_system->to_coordy(Y);
 
-		selected_shape = nullptr;
-		for(auto& i : shapes)
-		{
-			if(i->is_clicked(x, y) || i->is_border_clicked(x, y))
-			{
-				if(i->is_border_clicked(x, y)) shape_resizing = true;
-				else shape_translation = true;
-				selected_shape = i;
-			}
-		}
+		int width = width_track_bar->Position;
+		TColor pen_color = colors[selected_colors_group->Items->Items[0]->ImageIndex];
+		TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
 
-		if(!selected_shape)
-		{
-			if(tool_group->ItemIndex == -1) return;
-
-			int width = width_track_bar->Position;
-			TColor pen_color = colors[selected_colors_group->Items->Items[0]->ImageIndex];
-			TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
-
-			if(tool_group->ItemIndex == 0) shapes.push_back(new pencil(x, y, x, y, width, pen_color));
-			if(tool_group->ItemIndex == 1) shapes.push_back(new line(x, y, x, y, width, pen_color));
-			if(tool_group->ItemIndex == 2) shapes.push_back(new ellipse(x, y, 1, 1, width, pen_color, brush_color));
-			if(tool_group->ItemIndex == 3) shapes.push_back(new rectangle(x, y, x, y, width, pen_color, brush_color));
-			shape_drawing = true;
-		}
-        paint_box->Invalidate();
+		if(tool_group->ItemIndex == 0) shapes.push_back(new pencil(x, y, x, y, width, pen_color));
+		if(tool_group->ItemIndex == 1) shapes.push_back(new line(x, y, x, y, width, pen_color));
+		if(tool_group->ItemIndex == 2) shapes.push_back(new ellipse(x, y, 1, 1, width, pen_color, brush_color));
+		if(tool_group->ItemIndex == 3) shapes.push_back(new rectangle(x, y, x, y, width, pen_color, brush_color));
+		shape_drawing = true;
 	}
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, int X,
-		  int Y)
+          int Y)
 {
 
-	update_status_bar(X, Y);
-
-	double x = coord_system->to_coordx(X);
-	double y = coord_system->to_coordy(Y);
+    update_status_bar(X, Y);
 
 	if(shape_drawing)
 	{
+		double x = coord_system->to_coordx(X);
+		double y = coord_system->to_coordy(Y);
 		shapes.back()->update_on_drag(x, y);
 		Invalidate();
 	}
 	else
 	{
-		if((X >= paint_box->Width - 5 && Y >= paint_box->Height - 5) ||
-			 (selected_shape && selected_shape->is_border_clicked(x, y)))
+		if(X >= paint_box->Width - 5 && Y >= paint_box->Height - 5)
 			paint_box->Cursor = crSizeNWSE;
 
 		else paint_box->Cursor = crDefault;
 
-		if(shape_translation)
-		{//возможно стоит вынести в отдельную функцию
-			static double last_x = coord_system->to_coordx(X), last_y = coord_system->to_coordy(Y);
-			static shape* last_shape = selected_shape;
-
-			if(last_shape != selected_shape)
-			{
-				last_shape = selected_shape;
-				last_x = x; last_y = y;
-			}
-
-			selected_shape->translate(x - last_x, y - last_y);
-			last_x = x, last_y = y;
-			Invalidate();
-		}
-
-		else if(shape_resizing)
-		{
-			selected_shape->scale(x, y);
-			Invalidate();
-		}
-
-		else if(paint_box_resizing)
+		if(paint_box_resizing)
 		{
 			static TPoint last_point{ X, Y };
 
@@ -238,8 +186,7 @@ void __fastcall TForm1::paint_boxMouseUp(TObject *Sender, TMouseButton Button, T
           int X, int Y)
 {
 	shape_drawing = false;
-	shape_translation = false;
-	shape_resizing = false;
+
 	if(Button == mbLeft)
 		paint_box_resizing = false;
 }
@@ -271,12 +218,4 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 	update_scrollbars();
 }
 //---------------------------------------------------------------------------
-
-void __fastcall TForm1::width_track_barChange(TObject *Sender)
-{
-	if(selected_shape) selected_shape->set_width(width_track_bar->Position);
-	paint_box->Invalidate();
-}
-//---------------------------------------------------------------------------
-
 

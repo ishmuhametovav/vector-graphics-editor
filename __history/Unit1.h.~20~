@@ -13,7 +13,6 @@
 #include <Vcl.ButtonGroup.hpp>
 #include <System.ImageList.hpp>
 #include <Vcl.ImgList.hpp>
-#include <Vcl.Menus.hpp>
 #include<memory>
 #include<vector>
 #include<array>
@@ -35,17 +34,6 @@ __published:	// IDE-managed Components
 	TImageList *tools_image_list;
 	TButtonGroup *selected_colors_group;
 	TPaintBox *paint_box;
-	TScrollBar *vert_scrollbar;
-	TScrollBar *horiz_scrollbar;
-	TMainMenu *main_menu;
-	TMenuItem *file_button;
-	TMenuItem *settings_button;
-	TMenuItem *create_button;
-	TMenuItem *open_button;
-	TMenuItem *save_button;
-	TMenuItem *save_as_button;
-	TMenuItem *image_settings_button;
-	TMenuItem *about_program_button;
 	void __fastcall FormMouseWheelDown(TObject *Sender, TShiftState Shift, TPoint &MousePos,
           bool &Handled);
 	void __fastcall FormMouseWheelUp(TObject *Sender, TShiftState Shift, TPoint &MousePos,
@@ -60,10 +48,6 @@ __published:	// IDE-managed Components
           int X, int Y);
 	void __fastcall selected_colors_groupMouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
-	void __fastcall horiz_scrollbarChange(TObject *Sender);
-	void __fastcall vert_scrollbarChange(TObject *Sender);
-	void __fastcall FormResize(TObject *Sender);
-	void __fastcall width_track_barChange(TObject *Sender);
 
 
 
@@ -73,13 +57,9 @@ private:	// User declarations
 	std::array<TColor, 10> colors;
 	std::unique_ptr<coordinate_system> coord_system;
 	std::vector<shape*> shapes;
-	shape* selected_shape;
 	bool shape_drawing;
-	bool shape_translation;
-    bool shape_resizing;
-	bool paint_box_resizing;
+    bool paint_box_resizing;
 	void update_status_bar(const int X, const int Y);
-	void update_scrollbars();
 	void draw_shapes();
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);

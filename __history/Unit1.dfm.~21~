@@ -64,7 +64,6 @@ object Form1: TForm1
       Min = 1
       Position = 1
       TabOrder = 0
-      OnChange = width_track_barChange
     end
     object color_group: TButtonGroup
       Left = 9
@@ -165,6 +164,9 @@ object Form1: TForm1
     PageSize = 0
     TabOrder = 2
     OnChange = vert_scrollbarChange
+    ExplicitLeft = 536
+    ExplicitTop = 168
+    ExplicitHeight = 121
   end
   object horiz_scrollbar: TScrollBar
     Left = 0
@@ -175,6 +177,9 @@ object Form1: TForm1
     PageSize = 0
     TabOrder = 3
     OnChange = horiz_scrollbarChange
+    ExplicitLeft = 512
+    ExplicitTop = 208
+    ExplicitWidth = 121
   end
   object color_image_list: TImageList
     Left = 512

@@ -46,7 +46,7 @@ void TForm1::update_scrollbars()
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), selected_shape(nullptr), shape_drawing(false), shape_translation(false),
-		shape_resizing(false), paint_box_resizing(false), colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
+		paint_box_resizing(false), colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
 {
 }
 //---------------------------------------------------------------------------
@@ -111,7 +111,6 @@ void __fastcall TForm1::color_groupButtonClicked(TObject *Sender, int Index)
 		TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
 		selected_shape->set_pen_color(pen_color);
 		selected_shape->set_brush_color(brush_color);
-		paint_box->Invalidate();
 	}
 }
 //---------------------------------------------------------------------------
@@ -146,15 +145,13 @@ void __fastcall TForm1::paint_boxMouseDown(TObject *Sender, TMouseButton Button,
 		selected_shape = nullptr;
 		for(auto& i : shapes)
 		{
-			if(i->is_clicked(x, y) || i->is_border_clicked(x, y))
-			{
-				if(i->is_border_clicked(x, y)) shape_resizing = true;
-				else shape_translation = true;
+			if(i->is_clicked(x, y))
 				selected_shape = i;
-			}
 		}
 
-		if(!selected_shape)
+		if(selected_shape && selected_shape->is_clicked(x, y)) shape_translation = true;
+
+		else if(!selected_shape)
 		{
 			if(tool_group->ItemIndex == -1) return;
 
@@ -168,7 +165,6 @@ void __fastcall TForm1::paint_boxMouseDown(TObject *Sender, TMouseButton Button,
 			if(tool_group->ItemIndex == 3) shapes.push_back(new rectangle(x, y, x, y, width, pen_color, brush_color));
 			shape_drawing = true;
 		}
-        paint_box->Invalidate();
 	}
 }
 //---------------------------------------------------------------------------
@@ -189,8 +185,7 @@ void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, i
 	}
 	else
 	{
-		if((X >= paint_box->Width - 5 && Y >= paint_box->Height - 5) ||
-			 (selected_shape && selected_shape->is_border_clicked(x, y)))
+		if(X >= paint_box->Width - 5 && Y >= paint_box->Height - 5)
 			paint_box->Cursor = crSizeNWSE;
 
 		else paint_box->Cursor = crDefault;
@@ -208,12 +203,6 @@ void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, i
 
 			selected_shape->translate(x - last_x, y - last_y);
 			last_x = x, last_y = y;
-			Invalidate();
-		}
-
-		else if(shape_resizing)
-		{
-			selected_shape->scale(x, y);
 			Invalidate();
 		}
 
@@ -239,7 +228,6 @@ void __fastcall TForm1::paint_boxMouseUp(TObject *Sender, TMouseButton Button, T
 {
 	shape_drawing = false;
 	shape_translation = false;
-	shape_resizing = false;
 	if(Button == mbLeft)
 		paint_box_resizing = false;
 }
@@ -275,7 +263,6 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 void __fastcall TForm1::width_track_barChange(TObject *Sender)
 {
 	if(selected_shape) selected_shape->set_width(width_track_bar->Position);
-	paint_box->Invalidate();
 }
 //---------------------------------------------------------------------------
 

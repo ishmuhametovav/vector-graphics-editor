@@ -1,0 +1,46 @@
+#include<cmath>
+#include"coordinate_system.h"
+#include"Ellipse.h"
+
+ellipse::ellipse(double x_center, double y_center, double x_radius, double y_radius, int width, TColor pen_color, TColor brush_color) :
+	x_center(x_center), y_center(y_center), x_radius(x_radius), y_radius(y_radius), shape(width, pen_color, brush_color)
+{
+
+}
+void ellipse::draw(TCanvas* canvas, const coordinate_system* coord_system)
+{
+	int p_x_center = coord_system->to_pixelx(x_center);
+	int p_y_center = coord_system->to_pixely(y_center);
+	int p_x_radius = static_cast<int>(x_radius * coord_system->get_scale());
+	int p_y_radius = static_cast<int>(y_radius * coord_system->get_scale());
+    apply_properties(canvas);
+	canvas->Ellipse(p_x_center - p_x_radius, p_y_center - p_y_radius,
+		 p_x_center + p_x_radius, p_y_center + p_y_radius);
+}
+
+void ellipse::translate(const double dx, const double dy)
+{
+	x_center+=dx;
+	y_center+=dy;
+}
+
+void ellipse::scale(const double x, const double y)
+{
+	x_radius = std::abs(x_center - x);
+	y_radius = std::abs(y_center - y);
+}
+
+void ellipse::update_on_drag(const double x, const double y)
+{
+	scale(x, y);
+}
+
+void ellipse::draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system)
+{
+
+}
+
+bool ellipse::is_clicked(const double x, const double y) const
+{
+	return false;
+}

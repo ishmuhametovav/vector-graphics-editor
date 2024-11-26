@@ -14,9 +14,8 @@ public:
 	void translate(const double dx, const double dy) override;
 	void scale(const double x, const double y) override;
 	void update_on_drag(const double x, const double y) override;
-	void draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system) override;
-	bool is_clicked(const double x, const double y) const override;
-	bool is_border_clicked(const double x, const double y) const override;
+	void draw_selection_box(TCanvas* canvas) override;
+    bool is_clicked(const double x, const double y) const override;
 };
 
 #endif
