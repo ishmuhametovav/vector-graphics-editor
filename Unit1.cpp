@@ -25,6 +25,10 @@ void TForm1::draw_shapes()
 	if(selected_shape) selected_shape->draw_selection_box(paint_box->Canvas, coord_system.get());
 }
 
+void TForm1::remove_shape(const double x, const double y)
+{
+	shapes.remove_if([x, y](shape* s){return s->is_clicked(x,y);});
+}
 
 void TForm1::update_scrollbars()
 {
@@ -144,29 +148,35 @@ void __fastcall TForm1::paint_boxMouseDown(TObject *Sender, TMouseButton Button,
 		double y = coord_system->to_coordy(Y);
 
 		selected_shape = nullptr;
-		for(auto& i : shapes)
+
+		if(tool_group->ItemIndex == 5)
+			remove_shape(x,y);
+		else
 		{
-			if(i->is_clicked(x, y) || i->is_border_clicked(x, y))
+			for(auto& i : shapes)
 			{
-				if(i->is_border_clicked(x, y)) shape_resizing = true;
-				else shape_translation = true;
-				selected_shape = i;
+				if(i->is_clicked(x, y) || i->is_border_clicked(x, y))
+				{
+					if(i->is_border_clicked(x, y)) shape_resizing = true;
+					else shape_translation = true;
+					selected_shape = i;
+				}
 			}
-		}
 
-		if(!selected_shape)
-		{
-			if(tool_group->ItemIndex == -1) return;
+			if(!selected_shape)
+			{
+				if(tool_group->ItemIndex == -1) return;
 
-			int width = width_track_bar->Position;
-			TColor pen_color = colors[selected_colors_group->Items->Items[0]->ImageIndex];
-			TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
+				int width = width_track_bar->Position;
+				TColor pen_color = colors[selected_colors_group->Items->Items[0]->ImageIndex];
+				TColor brush_color = colors[selected_colors_group->Items->Items[1]->ImageIndex];
 
-			if(tool_group->ItemIndex == 0) shapes.push_back(new pencil(x, y, x, y, width, pen_color));
-			if(tool_group->ItemIndex == 1) shapes.push_back(new line(x, y, x, y, width, pen_color));
-			if(tool_group->ItemIndex == 2) shapes.push_back(new ellipse(x, y, 1, 1, width, pen_color, brush_color));
-			if(tool_group->ItemIndex == 3) shapes.push_back(new rectangle(x, y, x, y, width, pen_color, brush_color));
-			shape_drawing = true;
+				if(tool_group->ItemIndex == 0) shapes.push_front(new pencil(x, y, x, y, width, pen_color));
+				if(tool_group->ItemIndex == 1) shapes.push_front(new line(x, y, x, y, width, pen_color));
+				if(tool_group->ItemIndex == 2) shapes.push_front(new ellipse(x, y, 1, 1, width, pen_color, brush_color));
+				if(tool_group->ItemIndex == 3) shapes.push_front(new rectangle(x, y, x, y, width, pen_color, brush_color));
+				shape_drawing = true;
+			}
 		}
         paint_box->Invalidate();
 	}
@@ -184,7 +194,7 @@ void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, i
 
 	if(shape_drawing)
 	{
-		shapes.back()->update_on_drag(x, y);
+		shapes.front()->update_on_drag(x, y);
 		Invalidate();
 	}
 	else

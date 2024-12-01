@@ -15,6 +15,7 @@
 #include <Vcl.ImgList.hpp>
 #include <Vcl.Menus.hpp>
 #include<memory>
+#include<forward_list>
 #include<vector>
 #include<array>
 #include"coordinate_system.h"
@@ -72,7 +73,7 @@ __published:	// IDE-managed Components
 private:	// User declarations
 	std::array<TColor, 10> colors;
 	std::unique_ptr<coordinate_system> coord_system;
-	std::vector<shape*> shapes;
+	std::forward_list<shape*> shapes;
 	shape* selected_shape;
 	bool shape_drawing;
 	bool shape_translation;
@@ -81,6 +82,7 @@ private:	// User declarations
 	void update_status_bar(const int X, const int Y);
 	void update_scrollbars();
 	void draw_shapes();
+	void remove_shape(const double x, const double y);
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
 };

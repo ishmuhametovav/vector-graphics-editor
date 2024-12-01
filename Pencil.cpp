@@ -34,7 +34,7 @@ void pencil::translate(const double dx, const double dy)
 void pencil::scale(const double x, const double y)
 {
 	double min_x = points[0].first, max_x = points[0].first;
-	double min_y = points[0].second, max_y = points[0].second;
+    double min_y = points[0].second, max_y = points[0].second;
 
     for (const auto& point : points)
     {
@@ -44,24 +44,21 @@ void pencil::scale(const double x, const double y)
         if (point.second > max_y) max_y = point.second;
     }
 
-    double center_x = min_x + (max_x - min_x) / 2.0;
-    double center_y = min_y + (max_y - min_y) / 2.0;
+	double width = max_x - min_x;
+    double height = max_y - min_y;
 
-	for (auto& point : points)
+	double new_width = x - min_x;
+    double new_height = y - min_y;
+
+	double scale_x = (new_width == 0.0) ? 1.0 : new_width / width;
+	double scale_y = (new_height == 0.0) ? 1.0 : new_height / height;
+
+    for (auto& point : points)
 	{
-		point.first = x + (point.first - x) * center_x;
-		point.second = y + (point.second - y) * center_y;
+		point.first = min_x + (point.first - min_x) * scale_x;
+		point.second = min_y + (point.second - min_y) * scale_y;
 	}
-	double x_center = (x1 + x2)/2;
-	double y_center = (y1 + y2)/2;
 
-	double deltax = std::abs(x_center - x), deltay = std::abs(y_center - y);
-
-	x1 = x_center - deltax;
-	y1 = y_center - deltay;
-
-	x2 = x_center + deltax;
-	y2 = y_center + deltay;
 }
 
 void pencil::update_on_drag(const double x, const double y)
