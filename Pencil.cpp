@@ -126,3 +126,25 @@ bool pencil::is_border_clicked(const double x, const double y) const
 
 	return (x >= max_x && x <= max_x + width + 4 && y >= max_y && y <= max_y + width + 4);
 }
+
+std::string pencil::to_svg(const coordinate_system* coord_system) const
+{
+	std::string result;
+	auto colors = color_to_string();
+
+	result = "<polyline points=\"";
+
+	for(auto [x, y] : points)
+	{
+		int p_x = coord_system->to_pixelx(x);
+		int p_y = coord_system->to_pixely(y);
+		result += (std::to_string(p_x) + ',' +std::to_string(p_y) + ' ');
+	}
+
+	result[result.length()-1] = '\"';
+
+	result += " stroke-width=\"" + std::to_string(width) + "\" stroke=\""
+		+ colors.first + "\" fill=\"" + "none" + "\"/>";
+
+	return result;
+}

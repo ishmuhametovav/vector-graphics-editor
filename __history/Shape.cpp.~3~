@@ -1,0 +1,27 @@
+#include"coordinate_system.h"
+#include"Shape.h"
+#include<sstream>
+
+void shape::apply_properties(TCanvas* canvas) const
+{
+    canvas->Brush->Color = brush_color;
+	canvas->Pen->Style = psSolid;
+	canvas->Brush->Style = bsSolid;
+	canvas->Pen->Color = pen_color;
+	canvas->Pen->Width = width;
+}
+
+std::string shape::color_to_string() const
+{
+	std::string result;
+
+	int r = (pen_color & 0x00FF0000) >> 16;
+	int g = (pen_color & 0x0000FF00) >> 8;
+	int b = pen_color & 0x000000FF;
+
+	r = (brush_color & 0x00FF0000) >> 16;
+	g = (brush_color & 0x0000FF00) >> 8;
+	b = brush_color & 0x000000FF;
+
+	return result;
+}

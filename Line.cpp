@@ -84,3 +84,20 @@ bool line::is_border_clicked(const double x, const double y) const
 
 	return (x >= max_x && x <= max_x + width + 4 && y >= max_y && y <= max_y + width + 4);
 }
+
+std::string line::to_svg(const coordinate_system* coord_system) const
+{
+	std::string result;
+	auto colors = color_to_string();
+
+	int p_x1 = coord_system->to_pixelx(x1);
+	int p_y1 = coord_system->to_pixelx(y1);
+	int p_x2 = coord_system->to_pixelx(x2);
+	int p_y2 = coord_system->to_pixelx(y2);
+
+	result = "<line x1=\"" + std::to_string(p_x1) + "\" y1=\"" + std::to_string(p_y1) + "\" x2=\"" + std::to_string(p_x2)
+		+ "\" y2=\"" + std::to_string(p_y2) + "\" stroke-width=\"" + std::to_string(width) + "\" stroke=\""
+		+ colors.first + "\" fill=\"" + colors.second + "\"/>";
+
+	return result;
+}

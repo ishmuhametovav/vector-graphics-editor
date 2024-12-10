@@ -1,0 +1,36 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Unit3.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm3 *Form3;
+//---------------------------------------------------------------------------
+__fastcall TForm3::TForm3(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm3::cancel_buttonClick(TObject *Sender)
+{
+    Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm3::apply_buttonClick(TObject *Sender)
+{
+    Form1->get_coord_system()->set_scale(1.0);
+	Form1->paint_box->Width = StrToInt(width_edit->Text);
+	Form1->paint_box->Height = StrToInt(height_edit->Text);
+
+    Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm3::FormShow(TObject *Sender)
+{
+	width_edit->Text = IntToStr(Form1->paint_box->Width);
+	height_edit->Text = IntToStr(Form1->paint_box->Height);
+}
+//---------------------------------------------------------------------------

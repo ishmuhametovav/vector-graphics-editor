@@ -15,6 +15,7 @@ public:
 	void draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system) override;
 	bool is_clicked(const double x, const double y) const override;
 	bool is_border_clicked(const double x, const double y) const override;
+	std::string to_svg(const coordinate_system* coord_system) const override;
 };
 
 #endif

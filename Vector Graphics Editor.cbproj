@@ -215,11 +215,35 @@
         <None Include="Shape.h">
             <BuildOrder>5</BuildOrder>
         </None>
+        <CppCompile Include="SvgIO.cpp">
+            <BuildOrder>20</BuildOrder>
+        </CppCompile>
+        <None Include="SvgIO.h">
+            <BuildOrder>19</BuildOrder>
+        </None>
+        <CppCompile Include="tinyxml2.cpp">
+            <BuildOrder>17</BuildOrder>
+        </CppCompile>
+        <None Include="tinyxml2.h">
+            <BuildOrder>18</BuildOrder>
+        </None>
         <CppCompile Include="Unit1.cpp">
             <Form>Form1</Form>
             <FormType>dfm</FormType>
             <DependentOn>Unit1.h</DependentOn>
             <BuildOrder>2</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Unit2.cpp">
+            <Form>Form2</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>Unit2.h</DependentOn>
+            <BuildOrder>15</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Unit3.cpp">
+            <Form>Form3</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>Unit3.h</DependentOn>
+            <BuildOrder>16</BuildOrder>
         </CppCompile>
         <CppCompile Include="Vector Graphics Editor.cpp">
             <BuildOrder>0</BuildOrder>
@@ -228,6 +252,8 @@
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
+        <FormResources Include="Unit3.dfm"/>
+        <FormResources Include="Unit2.dfm"/>
         <FormResources Include="Unit1.dfm"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

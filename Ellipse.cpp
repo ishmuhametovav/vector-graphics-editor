@@ -1,4 +1,4 @@
-#include<cmath>
+
 #include"coordinate_system.h"
 #include"Ellipse.h"
 #include<algorithm>
@@ -82,4 +82,21 @@ bool ellipse::is_border_clicked(const double x, const double y) const
 	double max_y = std::max(y1, y2);
 
 	return (x >= max_x && x <= max_x + width + 4 && y >= max_y && y <= max_y + width + 4);
+}
+
+std::string ellipse::to_svg(const coordinate_system* coord_system) const
+{
+	std::string result;
+	auto colors = color_to_string();
+
+	int p_center_x = coord_system->to_pixelx(x_center);
+	int p_center_y = coord_system->to_pixelx(y_center);
+	int p_radius_x = coord_system->to_pixelx(x_radius);
+	int p_radius_y = coord_system->to_pixelx(y_radius);
+
+	result = "<ellipse cx=\"" + std::to_string(p_center_x) + "\" cy=\"" + std::to_string(p_center_y) + "\" rx=\"" + std::to_string(p_radius_x)
+		+ "\" ry=\"" + std::to_string(p_radius_y) + "\" stroke-width=\"" + std::to_string(width) + "\" stroke=\""
+		+ colors.first + "\" fill=\"" + colors.second + "\"/>";
+
+	return result;
 }

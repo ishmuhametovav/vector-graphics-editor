@@ -1,12 +1,17 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
+#include<string>
+#include<utility>
+#include<cmath>
+
 class shape
 {
 protected:
 	int width;
 	TColor pen_color, brush_color;
 
+	std::pair<std::string, std::string> color_to_string() const;
 	void apply_properties(TCanvas* canvas) const;
 public:
 	shape(int width, TColor pen_color, TColor brush_color) :
@@ -22,6 +27,7 @@ public:
 	virtual void scale(const double x, const double y) = 0;
 	virtual void update_on_drag(const double x, const double y) = 0;
 	virtual void draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system) = 0;
+	virtual std::string to_svg(const coordinate_system* coord_system) const = 0;
 };
 
 #endif

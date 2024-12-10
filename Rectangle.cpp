@@ -81,3 +81,20 @@ bool rectangle::is_border_clicked(const double x, const double y) const
 
 	return (x >= max_x && x <= max_x + width + 4 && y >= max_y && y <= max_y + width + 4);
 }
+
+std::string rectangle::to_svg(const coordinate_system* coord_system) const
+{
+	std::string result;
+	auto colors = color_to_string();
+
+	int min_x = std::min(coord_system->to_pixelx(x1), coord_system->to_pixelx(x2));
+	int min_y = std::min(coord_system->to_pixely(y1), coord_system->to_pixely(y2));
+	int rect_width = std::abs(coord_system->to_pixelx(x1) - coord_system->to_pixelx(x2));
+	int rect_height = std::abs(coord_system->to_pixely(y1) - coord_system->to_pixely(y2));
+
+	result = "<rect x=\"" + std::to_string(min_x) + "\" y=\"" + std::to_string(min_y) + "\" width=\"" + std::to_string(rect_width)
+		+ "\" height=\"" + std::to_string(rect_height) + "\" stroke-width=\"" + std::to_string(width) + "\" stroke=\""
+		+ colors.first + "\" fill=\"" + colors.second + "\"/>";
+
+	return result;
+}

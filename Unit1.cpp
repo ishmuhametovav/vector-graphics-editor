@@ -20,9 +20,9 @@ void TForm1::update_status_bar(const int X, const int Y)
 void TForm1::draw_shapes()
 {
 	for(auto& i : shapes)
-		i->draw(paint_box->Canvas, coord_system.get());
+		i->draw(paint_box->Canvas, coord_system);
 
-	if(selected_shape) selected_shape->draw_selection_box(paint_box->Canvas, coord_system.get());
+	if(selected_shape) selected_shape->draw_selection_box(paint_box->Canvas, coord_system);
 }
 
 void TForm1::remove_shape(const double x, const double y)
@@ -33,11 +33,13 @@ void TForm1::remove_shape(const double x, const double y)
 void TForm1::update_scrollbars()
 {
 	vert_scrollbar->Min = std::min(paint_box->Top, -paint_box->Top);
-	vert_scrollbar->Max = std::max(0, paint_box->ClientHeight - ClientHeight);
+	//vert_scrollbar->Max = std::max(0, paint_box->ClientHeight - ClientHeight);
+	vert_scrollbar->Max = vert_scrollbar->Min + paint_box->ClientHeight;
 	vert_scrollbar->PageSize = paint_box->ClientHeight;
 
 	horiz_scrollbar->Min = std::min(paint_box->Left, -paint_box->Left);
-	horiz_scrollbar->Max = std::max(0, paint_box->ClientWidth - ClientWidth);
+	//horiz_scrollbar->Max = std::max(0, paint_box->ClientWidth - ClientWidth);
+    horiz_scrollbar->Max = horiz_scrollbar->Min + paint_box->ClientWidth;
 	horiz_scrollbar->PageSize = paint_box->ClientWidth;
 
 	if (vert_scrollbar->Position > vert_scrollbar->Max ||
@@ -49,9 +51,10 @@ void TForm1::update_scrollbars()
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner), coord_system(std::make_unique<coordinate_system>()), selected_shape(nullptr), shape_drawing(false), shape_translation(false),
-		shape_resizing(false), paint_box_resizing(false), colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
+	: TForm(Owner), coord_system(new coordinate_system()), original_width(361), original_height(321), selected_shape(nullptr), shape_drawing(false), shape_translation(false),
+		shape_resizing(false), paint_box_resizing(false), file_modified(false), filename(""), colors{clWhite, clYellow, clGreen, clMaroon, clRed, clFuchsia, clGray, clBlue, clPurple, clBlack}
 {
+	file_io = new svg_io(coord_system, &shapes);
 }
 //---------------------------------------------------------------------------
 
@@ -180,6 +183,7 @@ void __fastcall TForm1::paint_boxMouseDown(TObject *Sender, TMouseButton Button,
 		}
         paint_box->Invalidate();
 	}
+	file_modified = true;
 }
 //---------------------------------------------------------------------------
 
@@ -237,6 +241,9 @@ void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, i
 			paint_box->Width += deltax;
 			paint_box->Height += deltay;
 
+			original_width += deltax;
+			original_height += deltay;
+
 			last_point = { X, Y };
 		}
 	}
@@ -289,4 +296,91 @@ void __fastcall TForm1::width_track_barChange(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TForm1::about_program_buttonClick(TObject *Sender)
+{
+    Form2->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::image_settings_buttonClick(TObject *Sender)
+{
+    Form3->Show();
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::save_buttonClick(TObject *Sender)
+{
+	if(filename == "") save_as_buttonClick(Sender);
+	else
+	{
+		file_io->save_to_file(filename, original_width, original_height);
+		file_modified = false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::open_buttonClick(TObject *Sender)
+{
+	try
+	{
+		int rc = IDYES;
+		if(file_modified)
+			rc = Application->MessageBox(L"Файл не сохранен. Открыть новый файл?", L"Открытие файла", MB_YESNOCANCEL);
+		if(rc == IDCANCEL || rc == IDNO) return;
+
+		if(open_dialog->Execute())
+		{
+			std::wstring wstr(open_dialog->FileName.c_str());
+			int len = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+			filename.resize(len);
+			WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, &filename[0], len, NULL, NULL);
+
+			shapes.clear();
+			selected_shape = nullptr;
+
+			file_io->load_from_file(filename, original_width, original_height);
+			paint_box->Width = original_width;
+			paint_box->Height = original_height;
+			file_modified = false;
+			paint_box->Invalidate();
+		}
+	}
+	catch(const std::exception& e){MessageBoxA(nullptr, filename.c_str(), "Error", MB_OK);}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::create_buttonClick(TObject *Sender)
+{
+	int rc = IDYES;
+		if(file_modified)
+			rc = Application->MessageBox(L"Файл не сохранен. Создать новый файл?", L"Создание файла", MB_YESNOCANCEL);
+	if(rc == IDCANCEL || rc == IDNO) return;
+
+	shapes.clear();
+	selected_shape = nullptr;
+
+	filename = "";
+    file_modified = false;
+	paint_box->Invalidate();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::save_as_buttonClick(TObject *Sender)
+{
+	save_dialog->FileName = std::wstring(filename.begin(), filename.end()).c_str();
+
+	if(save_dialog->Execute())
+	{
+		std::wstring wstr(save_dialog->FileName.c_str());
+		int len = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+		filename.resize(len);
+		WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, &filename[0], len, NULL, NULL);
+
+		file_io->save_to_file(filename, original_width, original_height);
+		file_modified = false;
+	}
+}
+//---------------------------------------------------------------------------
 
