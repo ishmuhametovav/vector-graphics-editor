@@ -1,0 +1,45 @@
+#include"coordinate_system.h"
+#include"Text.h"
+#include<algorithm>
+
+text::text(double x1, double y1, double x2, double y2, int width, TColor pen_color) : shape(width, pen_color, clNone) {}
+
+void text::draw(TCanvas* canvas, const coordinate_system* coord_system)
+{
+
+}
+
+void text::translate(const double dx, const double dy)
+{
+
+}
+
+void text::scale(const double x, const double y)
+{
+
+}
+
+void text::update_on_drag(const double x, const double y)
+{
+
+}
+
+void text::draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system)
+{
+
+}
+
+bool text::is_clicked(const double x, const double y) const
+{
+
+}
+
+bool text::is_border_clicked(const double x, const double y) const
+{
+
+}
+
+std::string text::to_svg(const coordinate_system* coord_system) const
+{
+
+}

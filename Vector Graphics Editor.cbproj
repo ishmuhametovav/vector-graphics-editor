@@ -221,6 +221,12 @@
         <None Include="SvgIO.h">
             <BuildOrder>19</BuildOrder>
         </None>
+        <CppCompile Include="Text.cpp">
+            <BuildOrder>22</BuildOrder>
+        </CppCompile>
+        <None Include="Text.h">
+            <BuildOrder>21</BuildOrder>
+        </None>
         <CppCompile Include="tinyxml2.cpp">
             <BuildOrder>17</BuildOrder>
         </CppCompile>

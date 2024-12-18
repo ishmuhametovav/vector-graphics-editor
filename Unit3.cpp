@@ -28,6 +28,8 @@ void __fastcall TForm3::apply_buttonClick(TObject *Sender)
 	Form1->paint_box->Width = Form1->get_original_width();
 	Form1->paint_box->Height = Form1->get_original_height();
 
+    Form1->update_scrollbars();
+
     Close();
 }
 //---------------------------------------------------------------------------

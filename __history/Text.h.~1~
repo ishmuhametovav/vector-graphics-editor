@@ -1,0 +1,21 @@
+#ifndef TEXT_H
+#define TEXT_H
+
+#include"Shape.h"
+
+class text : public shape
+{
+	double x1,y1,x2,y2;
+public:
+	text(double x1, double y1, double x2, double y2, int width, TColor pen_color);
+	void draw(TCanvas* canvas, const coordinate_system* coord_system) override;
+	void translate(const double dx, const double dy) override;
+	void scale(const double x, const double y) override;
+	void update_on_drag(const double x, const double y) override;
+	void draw_selection_box(TCanvas* canvas, const coordinate_system* coord_system) override;
+	bool is_clicked(const double x, const double y) const override;
+	bool is_border_clicked(const double x, const double y) const override;
+	std::string to_svg(const coordinate_system* coord_system) const override;
+};
+
+#endif

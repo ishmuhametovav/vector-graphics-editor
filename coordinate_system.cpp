@@ -35,5 +35,5 @@ double coordinate_system::get_scale() const
 
 void coordinate_system::set_scale(const double value)
 {
-	this->scale = value > 0.1 ? value : 0.1;
+    this->scale = value > 0.3 ? (value > 5 ? 5 : value) : 0.3;
 }

@@ -32,21 +32,15 @@ void TForm1::remove_shape(const double x, const double y)
 
 void TForm1::update_scrollbars()
 {
-	vert_scrollbar->Min = std::min(paint_box->Top, -paint_box->Top);
-	//vert_scrollbar->Max = std::max(0, paint_box->ClientHeight - ClientHeight);
-	vert_scrollbar->Max = vert_scrollbar->Min + paint_box->ClientHeight;
-	vert_scrollbar->PageSize = paint_box->ClientHeight;
+    vert_scrollbar->Min = -abs(paint_box->Top) -paint_box->Height/2;
+    vert_scrollbar->Max = abs(paint_box->Top) + paint_box->Height/2;
 
-	horiz_scrollbar->Min = std::min(paint_box->Left, -paint_box->Left);
-	//horiz_scrollbar->Max = std::max(0, paint_box->ClientWidth - ClientWidth);
-    horiz_scrollbar->Max = horiz_scrollbar->Min + paint_box->ClientWidth;
-	horiz_scrollbar->PageSize = paint_box->ClientWidth;
+    horiz_scrollbar->Min = -abs(paint_box->Left) -paint_box->Width/2;
+    horiz_scrollbar->Max = abs(paint_box->Left) + paint_box->Width/2;
 
-	if (vert_scrollbar->Position > vert_scrollbar->Max ||
-		vert_scrollbar->Position < vert_scrollbar->Min) vert_scrollbar->Position = vert_scrollbar->Min;
+    vert_scrollbar->Position = -paint_box->Top;
+    horiz_scrollbar->Position = -paint_box->Left;
 
-	if (horiz_scrollbar->Position > horiz_scrollbar->Max ||
-		horiz_scrollbar->Position < horiz_scrollbar->Min) horiz_scrollbar->Position = horiz_scrollbar->Min;
 }
 
 //---------------------------------------------------------------------------
@@ -245,9 +239,10 @@ void __fastcall TForm1::paint_boxMouseMove(TObject *Sender, TShiftState Shift, i
 			original_height += deltay;
 
 			last_point = { X, Y };
+
+            update_scrollbars();
 		}
 	}
-	update_scrollbars();
 }
 //---------------------------------------------------------------------------
 
@@ -381,6 +376,12 @@ void __fastcall TForm1::save_as_buttonClick(TObject *Sender)
 		file_io->save_to_file(filename, original_width, original_height);
 		file_modified = false;
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+    update_scrollbars();
 }
 //---------------------------------------------------------------------------
 

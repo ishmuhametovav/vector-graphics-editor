@@ -13,6 +13,7 @@ object Form1: TForm1
   Font.Style = []
   Menu = main_menu
   OnCanResize = FormCanResize
+  OnCreate = FormCreate
   OnMouseWheelDown = FormMouseWheelDown
   OnMouseWheelUp = FormMouseWheelUp
   OnResize = FormResize
@@ -164,7 +165,10 @@ object Form1: TForm1
     Height = 391
     Align = alRight
     Kind = sbVertical
-    PageSize = 0
+    Max = 180
+    Min = -180
+    PageSize = 1
+    Position = -58
     TabOrder = 2
     OnChange = vert_scrollbarChange
   end
@@ -174,7 +178,10 @@ object Form1: TForm1
     Width = 624
     Height = 17
     Align = alBottom
-    PageSize = 0
+    Max = 180
+    Min = -180
+    PageSize = 1
+    Position = -120
     TabOrder = 3
     OnChange = horiz_scrollbarChange
   end

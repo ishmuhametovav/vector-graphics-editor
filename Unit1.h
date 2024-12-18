@@ -77,6 +77,7 @@ __published:	// IDE-managed Components
 	void __fastcall open_buttonClick(TObject *Sender);
 	void __fastcall create_buttonClick(TObject *Sender);
 	void __fastcall save_as_buttonClick(TObject *Sender);
+    void __fastcall FormCreate(TObject *Sender);
 
 
 
@@ -96,11 +97,11 @@ private:	// User declarations
 	bool file_modified;
     std::string filename;
 	void update_status_bar(const int X, const int Y);
-	void update_scrollbars();
 	void draw_shapes();
 	void remove_shape(const double x, const double y);
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
+    void update_scrollbars();
 	coordinate_system* get_coord_system(){ return coord_system; }
 	int get_original_width() const { return original_width; }
 	int get_original_height() const { return original_height; }
